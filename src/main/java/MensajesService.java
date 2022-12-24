@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class MensajesService{
 
+
     public static void postMessage(){
         Scanner sc = new Scanner(System.in);
 
@@ -22,6 +23,7 @@ public class MensajesService{
 
     public static void deleteMessage(){
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Indica el id del mensaje a borrar");
         getMessage();
         int idMensaje = sc.nextInt();
@@ -34,8 +36,24 @@ public class MensajesService{
         }
     }
 
-    public static void patchMessage(){
+    public static void patchMessage() {
+        Scanner sc = new Scanner(System.in);
 
+        System.out.println("Ingresa el Id del Mensaje a Editar:");
+        getMessage();
+        int id=sc.nextInt();
+
+        System.out.println("Escribe tu mensaje:");
+        sc.nextLine();
+        String message = sc.nextLine();
+
+        System.out.println("Escribe el nombre del autor:");
+        String author = sc.nextLine();
+
+        Mensajes update= new Mensajes(message,author);
+        update.setIdMensaje(id);
+
+        MensajesDAO.putMessageDB(update);
     }
 
 }
