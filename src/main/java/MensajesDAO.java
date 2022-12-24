@@ -50,6 +50,7 @@ public class MensajesDAO{
                     System.out.println();
                 }
 
+            Conexion.closeConnection(db);
             } catch (SQLException e) {
                 System.out.println("No se pudieron recuperar los mensajes");
                 throw new RuntimeException(e);
@@ -59,8 +60,32 @@ public class MensajesDAO{
         }
     }
 
-    public static void deleteMessageDB(int idMessage){
+    public static boolean deleteMessageDB(int idMessage){
+        try{
+            Connection db =Conexion.getConnection();
+            PreparedStatement ps = null;
 
+            try {
+                String query = "DELETE FROM mensajes WHERE id_mensaje = ?";
+                ps = db.prepareStatement(query);
+                ps.setInt(1,idMessage);
+                int countRowsUpdates = ps.executeUpdate();
+
+                if (countRowsUpdates !=0){
+                    Conexion.closeConnection(db);
+                    return true;
+                }else{
+                    Conexion.closeConnection(db);
+                    return false;
+                }
+            } catch (SQLException e) {
+                System.out.println("No se pudo eliminar el mensaje");
+                throw new RuntimeException(e);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void patchMessageDB(Mensajes message){

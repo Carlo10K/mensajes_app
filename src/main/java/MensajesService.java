@@ -21,7 +21,17 @@ public class MensajesService{
     }
 
     public static void deleteMessage(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Indica el id del mensaje a borrar");
+        getMessage();
+        int idMensaje = sc.nextInt();
 
+        if(MensajesDAO.deleteMessageDB(idMensaje)){
+            System.out.println("El mensaje ha sido borrado");
+        }else{
+            System.out.println("Selecciona un Id valido");
+            deleteMessage();
+        }
     }
 
     public static void patchMessage(){
